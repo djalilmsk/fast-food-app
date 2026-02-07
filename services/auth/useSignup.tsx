@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { customFetch } from "../config";
 
 function useSignup() {
-  const { setUser } = useAuth();
+  const { setUser, setIsLoading } = useAuth();
 
   return useMutation({
     mutationFn: async (data: { username: string, email: string, password: string }) => {
@@ -12,7 +12,8 @@ function useSignup() {
       return res.data
     },
     onSuccess: (data) => {
-      setUser(data);
+      setUser(data.data);
+      setIsLoading(true);
     },
     onError: (error) => {
       console.error("Signup failed:", error);

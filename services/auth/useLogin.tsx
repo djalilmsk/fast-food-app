@@ -3,7 +3,7 @@ import { customFetch } from "../config"
 import { useAuth } from "@/context/auth";
 
 function useLogin() {
-  const { setUser } = useAuth();
+  const { setUser, setIsLoading } = useAuth();
 
   return useMutation({
     mutationFn: async (data: { email: string, password: string }) => {
@@ -12,7 +12,8 @@ function useLogin() {
       return res.data
     },
     onSuccess: (data) => {
-      setUser(data);
+      setUser(data.data);
+      setIsLoading(true);
     },
     onError: (error) => {
       console.error("Login failed:", error);

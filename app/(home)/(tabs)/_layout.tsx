@@ -14,11 +14,6 @@ const TabIcon = ({ focused, name, icon }: { focused: boolean, name: string; icon
 }
 
 const _layout = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (!isAuthenticated && !isLoading) return <Redirect href="/log-in" />
-
   return (
     <Tabs screenOptions={{
       headerShown: false, tabBarShowLabel: false,
@@ -29,6 +24,8 @@ const _layout = () => {
         backgroundColor: '#fff',
         borderTopWidth: 0,
         shadowColor: '#00000025',
+        shadowOffset: { width: 0, height: 2 },
+        elevation: 5,
         shadowOpacity: 0.2,
         shadowRadius: 4,
         position: 'absolute',
@@ -45,7 +42,7 @@ const _layout = () => {
       }} />
       <Tabs.Screen name="search" options={{ title: "Search", tabBarIcon: ({ focused }) => <TabIcon focused={focused} name="Search" icon={images.search} /> }} />
       <Tabs.Screen name="cart" options={{ title: "Cart", tabBarIcon: ({ focused }) => <TabIcon focused={focused} name="Cart" icon={images.bag} /> }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile", tabBarIcon: ({ focused }) => <TabIcon focused={focused} name="Profile" icon={images.user} /> }} />
+      <Tabs.Screen name="profile" options={{ title: "Profile", tabBarIcon: ({ focused }) => <TabIcon focused={focused} name="Profile" icon={images.person} /> }} />
     </Tabs>
   )
 }

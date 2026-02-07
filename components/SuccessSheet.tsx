@@ -4,6 +4,7 @@ import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState
 import success from "@/assets/images/success.png"
 import CustomButton from "./ui/CustomButton"
 import { router } from "expo-router"
+import { useAuth } from "@/context/auth"
 
 export type SuccessSheetRef = {
   open: () => void
@@ -20,6 +21,7 @@ const SuccessSheet = forwardRef<SuccessSheetRef, SuccessSheetProps>(({
   title = "Login Successful!",
   subtitle = "You're all set to continue where you left off."
 }, ref) => {
+  const { setIsLoading } = useAuth() 
   const bottomSheetRef = useRef<BottomSheet>(null)
   const [messageTitle, setMessageTitle] = useState(title)
   const [messageSubtitle, setMessageSubtitle] = useState(subtitle)
@@ -69,6 +71,7 @@ const SuccessSheet = forwardRef<SuccessSheetRef, SuccessSheetProps>(({
         <CustomButton title="Go to Home Page" className="mt-10" onPress={() => {
           bottomSheetRef.current?.close()
           router.replace('/')
+          setIsLoading(false)
         }} />
       </BottomSheetView>
     </BottomSheet>

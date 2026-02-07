@@ -1,14 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { customFetch } from '@/services/config';
-
-// Types
-export interface AuthUser {
-  _id: string;
-  email: string;
-  name?: string;
-  token?: string;
-}
+import { AuthUser } from '@/types/user';
 
 export interface AuthContextType {
   user: AuthUser | null;
@@ -16,6 +9,8 @@ export interface AuthContextType {
   deleteUser: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+
 }
 
 // Create context
@@ -99,6 +94,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     deleteUser,
     isAuthenticated,
     isLoading,
+    setIsLoading
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
