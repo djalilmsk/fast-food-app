@@ -2,13 +2,18 @@
 import SuccessSheet, { SuccessSheetRef } from '@/components/SuccessSheet'
 import { images } from '@/constants'
 import { SuccessSheetProvider } from '@/context/SuccessSheetContext'
-import { Slot } from 'expo-router'
+import { Redirect, Slot } from 'expo-router'
 import { Image, KeyboardAvoidingView, Platform, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useRef } from 'react'
+import { useAuth } from '@/context/auth'
 
 const _layout = () => {
   const successSheetRef = useRef<SuccessSheetRef>(null!)
+
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isAuthenticated && !isLoading) return <Redirect href="/" />
 
   return (
     <SuccessSheetProvider successSheetRef={successSheetRef}>

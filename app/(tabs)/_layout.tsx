@@ -1,13 +1,17 @@
 import { useAuth } from '@/context/auth';
-import { Redirect, Slot } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 
 const _layout = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
-  if (!isAuthenticated) return <Redirect href="/log-in" />
+  if (!isAuthenticated && !isLoading) return <Redirect href="/log-in" />
 
-  return <Slot />
+  return (
+    <Tabs screenOptions={{ headerShown: false }} >
+      <Tabs.Screen name="index" options={{ title: "Home" }} />
+    </Tabs>
+  )
 }
 
 export default _layout
