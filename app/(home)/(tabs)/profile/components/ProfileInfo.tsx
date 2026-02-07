@@ -4,8 +4,6 @@ import { AuthUser } from '@/types/user'
 
 
 const ProfileInfo = ({ user }: { user: AuthUser | null }) => {
-  console.log(user)
-  
   const infoItems = [
     {
       icon: images.user,
