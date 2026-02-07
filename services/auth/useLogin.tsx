@@ -5,8 +5,6 @@ import { useAuth } from "@/context/auth";
 function useLogin() {
   const { setUser } = useAuth();
 
-  console.log('dasdoan')
-
   return useMutation({
     mutationFn: async (data: { email: string, password: string }) => {
       const res = await customFetch.post("/auth/login", data)

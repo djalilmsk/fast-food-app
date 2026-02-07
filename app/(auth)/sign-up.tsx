@@ -1,5 +1,6 @@
 import CustomButton from '@/components/ui/CustomButton'
 import CustomInput from '@/components/ui/CustomInput'
+import { useSuccessSheet } from '@/context/SuccessSheetContext'
 import { UserSignUp } from '@/schemas/signup'
 import useSignup from '@/services/auth/useSignup'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js'
@@ -9,7 +10,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { Alert, Pressable, Text, View } from 'react-native'
 import z from 'zod'
 
+
+
+
 const SignUp = () => {
+  const { successSheetRef } = useSuccessSheet();
   const { handleSubmit, formState: { errors }, control } = useForm<z.infer<typeof UserSignUp>>({
     resolver: zodResolver(UserSignUp),
     defaultValues: {
@@ -28,8 +33,11 @@ const SignUp = () => {
     }
     signup(postData, {
       onSuccess: () => {
-        Alert.alert('Success', 'Signup successful!');
-        router.replace('/');
+        successSheetRef?.current?.setMessage?.(
+          "Account Created!",
+          "Welcome! Your account has been successfully created."
+        )
+        successSheetRef?.current?.open?.();
       },
       onError: (error) => {
         Alert.alert('Signup failed', 'An error occurred during signup.');
@@ -110,7 +118,7 @@ const SignUp = () => {
           <Text>Log In</Text>
         </Link>
       </View>
-    </View>
+    </View >
   )
 }
 

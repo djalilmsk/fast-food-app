@@ -8,8 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { UserLogin } from '@/schemas/login';
 import * as z from 'zod';
 import useLogin from '@/services/auth/useLogin';
+import { useSuccessSheet } from '@/context/SuccessSheetContext';
 
 const Login = () => {
+  const { successSheetRef } = useSuccessSheet();
   const { handleSubmit, formState: { errors }, control } = useForm<z.infer<typeof UserLogin>>({
     resolver: zodResolver(UserLogin),
     defaultValues: {
@@ -24,8 +26,7 @@ const Login = () => {
     console.log(data);
     login(data, {
       onSuccess: () => {
-        Alert.alert('Success', 'Login successful!');
-        router.replace('/');
+        successSheetRef?.current?.open();
       },
       onError: (error) => {
         Alert.alert('Login failed', 'An error occurred during login.');
