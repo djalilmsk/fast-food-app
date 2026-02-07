@@ -1,4 +1,5 @@
 import { images } from '@/constants'
+import { router } from 'expo-router';
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
@@ -6,7 +7,7 @@ const CartButton = () => {
   const totalItems = 3; // Example item count
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => { router.push("/(home)/(tabs)/cart") }}>
       <View className="bg-dark-100 rounded-full size-12 items-center justify-center">
         <Image source={images.bag} className="size-5 mr-[2px]" resizeMode="contain" />
       </View>

@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const search = () => {
   return (
     <SafeAreaView>
-      <Text>search</Text>
     </SafeAreaView>
   )
 }

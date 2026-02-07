@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAuth } from '@/context/auth'
@@ -9,6 +9,8 @@ import { EditProfile as EditProfileSchema } from '@/schemas/editProfile'
 import z from 'zod'
 import CustomInput from '@/components/ui/CustomInput'
 import CustomButton from '@/components/ui/CustomButton'
+import useUpdateUser from '@/services/auth/useUpdateUser'
+import { router } from 'expo-router'
 
 const EditProfile = () => {
   const { user } = useAuth()
@@ -23,8 +25,18 @@ const EditProfile = () => {
     }
   })
 
+  const { mutate: update, isPending } = useUpdateUser()
+
   const onSubmit = (data: z.infer<typeof EditProfileSchema>) => {
-    console.log(data);
+    update(data, {
+      onSuccess: () => {
+        router.back()
+      },
+      onError: () => {
+        Alert.alert("Error", "An unknown error occurred, please try again later.")
+      }
+    }
+    )
   }
 
   const onError = (errors: any) => {
@@ -67,7 +79,7 @@ const EditProfile = () => {
                   value={value}
                   onChangeText={onChange}
                   error={errors.email?.message}
-                // disabled={isPending}
+                  disabled={isPending}
                 />
               </>
             )}
@@ -83,7 +95,7 @@ const EditProfile = () => {
                   value={value}
                   onChangeText={onChange}
                   error={errors.phoneNumber?.message}
-                // disabled={isPending}
+                  disabled={isPending}
                 />
               </>
             )}
@@ -99,7 +111,7 @@ const EditProfile = () => {
                   value={value}
                   onChangeText={onChange}
                   error={errors.address1?.message}
-                // disabled={isPending}
+                  disabled={isPending}
                 />
               </>
             )}
@@ -122,7 +134,7 @@ const EditProfile = () => {
           />
 
 
-          <CustomButton title='Save' onPress={handleSubmit(onSubmit, onError)} /* disabled={isPending} loading={isPending} */ />
+          <CustomButton title='Save' onPress={handleSubmit(onSubmit, onError)} disabled={isPending} loading={isPending} />
         </View>
       </ScrollView>
     </SafeAreaView>
