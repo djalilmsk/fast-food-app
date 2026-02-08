@@ -6,10 +6,16 @@ import Categories from "./components/Categories";
 import useGetFood from "@/services/food/useGetFood";
 import FoodCard from "./components/FoodCard";
 import { images } from "@/constants";
+import { useFoodDetailsSheet } from "@/context/food/FoodDetailsSheetContext";
 
 export default function Search() {
   const { data: foods, isLoading } = useGetFood()
+  const { foodDetailsSheetRef } = useFoodDetailsSheet()
   const isEmpty = !foods || foods.length === 0
+
+  const handleFoodPress = (food: any) => {
+    foodDetailsSheetRef?.current?.open(food)
+  }
 
   return (
     <SafeAreaView className="flex-1">
@@ -34,7 +40,7 @@ export default function Search() {
       ) : (
         <FlatList
           data={foods}
-          renderItem={({ item }) => <FoodCard food={item} />}
+          renderItem={({ item }) => <FoodCard food={item} onPress={handleFoodPress} />}
           contentContainerClassName="pb-28 px-5"
           ListHeaderComponent={() => <Categories />}
           ListEmptyComponent={

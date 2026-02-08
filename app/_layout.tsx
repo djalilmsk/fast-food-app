@@ -1,12 +1,14 @@
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { QueryClientProvider } from '@tanstack/react-query';
 
 import "./global.css";
 import { queryClient } from "@/services/config";
 import { AuthProvider } from "@/context/auth";
 import { AddressProvider } from "@/context/address";
+import { FoodDetailsSheetProvider } from "@/context/food/FoodDetailsSheetContext";
+import FoodDetailsSheet, { FoodDetailsSheetRef } from "@/components/FoodDetailsSheet";
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
@@ -20,6 +22,8 @@ export default function RootLayout() {
     "rubik-extrabold": require("../assets/fonts/Rubik-ExtraBold.ttf"),
   });
 
+  const foodDetailsSheetRef = useRef<FoodDetailsSheetRef>(null);
+
   useEffect(() => {
     if (error) throw error;
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -29,9 +33,12 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AddressProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <Stack screenOptions={{ headerShown: false }} />
-          </GestureHandlerRootView>
+          <FoodDetailsSheetProvider foodDetailsSheetRef={foodDetailsSheetRef}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <Stack screenOptions={{ headerShown: false }} />
+              <FoodDetailsSheet ref={foodDetailsSheetRef} />
+            </GestureHandlerRootView>
+          </FoodDetailsSheetProvider>
         </AddressProvider>
       </AuthProvider>
     </QueryClientProvider>
