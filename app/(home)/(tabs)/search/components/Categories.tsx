@@ -6,7 +6,7 @@ function Categories() {
   const [active, setActive] = useState('1');
 
   return (
-    <View className="pt-4" style={{ paddingTop: 20 }}>
+    <View style={{ paddingTop: 16 }}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
