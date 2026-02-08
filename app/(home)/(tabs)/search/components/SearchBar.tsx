@@ -2,9 +2,11 @@ import CustomInput from "@/components/ui/CustomInput"
 import { images } from "@/constants"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "expo-router"
+import { useCallback } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { View } from "react-native"
 import z from "zod"
+import { useDebounce } from "@/lib/useDebounce"
 
 const search = z.object({
   name: z.string()
@@ -19,9 +21,11 @@ function SearchBar() {
     }
   })
 
-  const handleSearchChange = (value: string) => {
+  const handleSearchChange = useCallback((value: string) => {
     router.setParams({ search: value })
-  }
+  }, [router])
+
+  const debouncedSearch = useDebounce(handleSearchChange, 500)
 
   return (
     <View>
@@ -37,7 +41,7 @@ function SearchBar() {
             value={value}
             onChangeText={(text) => {
               onChange(text)
-              handleSearchChange(text)
+              debouncedSearch(text)
             }}
             error={errors.name?.message}
           />

@@ -9,7 +9,7 @@ function useGetFood() {
   const category = CATEGORIES.find(cat => cat.id === categoryId)?.name || 'All'
   const search = params.search as string || '';
 
-  return useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: ["foods", category, search],
     queryFn: async () => {
       const queryParams: any = {}
@@ -24,6 +24,8 @@ function useGetFood() {
       return res.data.data.foods
     }
   })
+
+  return { data, isLoading, error, isError }
 }
 
 export default useGetFood

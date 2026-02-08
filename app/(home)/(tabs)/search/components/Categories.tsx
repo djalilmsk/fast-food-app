@@ -1,9 +1,10 @@
 import { CATEGORIES } from "@/constants"
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native"
 
 function Categories() {
+  const router = useRouter()
   const params = useLocalSearchParams()
   const [active, setActive] = useState(params.category as string || '1');
   const scrollViewRef = useRef<ScrollView>(null)
@@ -24,7 +25,7 @@ function Categories() {
   }, [active])
 
   return (
-    <View className="pt-4" style={{ paddingTop: 20 }}>
+    <View style={{ paddingBottom: 20, paddingTop: 10 }}>
       <ScrollView
         ref={scrollViewRef}
         horizontal
@@ -40,7 +41,10 @@ function Categories() {
             ref={(ref) => {
               if (ref) categoryRefs.current[item.id] = ref as any
             }}
-            onPress={() => setActive(item.id)}
+            onPress={() => {
+              setActive(item.id)
+              router.setParams({ category: item.id })
+            }}
             style={{
               paddingHorizontal: 20,
               paddingVertical: 10,
