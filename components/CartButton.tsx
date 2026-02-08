@@ -1,10 +1,12 @@
 import { images } from '@/constants'
+import useGetCart from '@/services/cart/useGetCart';
 import { router } from 'expo-router';
 import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 const CartButton = () => {
-  const totalItems = 3; // Example item count
+  const { data: cart } = useGetCart()
+  const totalItems = cart?.totalItems || 0; 
 
   return (
     <TouchableOpacity onPress={() => { router.push("/(home)/(tabs)/cart") }}>

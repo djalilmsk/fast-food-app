@@ -3,7 +3,7 @@ import React from 'react'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import CartButton from './CartButton'
 import { useAuth } from '@/context/auth'
-
+import useGetCart from '@/services/cart/useGetCart'
 const HomeHeader = () => {
   const { user } = useAuth()
 
