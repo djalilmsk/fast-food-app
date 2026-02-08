@@ -18,7 +18,7 @@ function FoodCard({ food }: { food: any }) {
         <Text className="font-quicksand-medium text-sm" numberOfLines={2}>{food.category} | {food.description}</Text>
         <View className="flex-row justify-between items-center" style={{ marginTop: 'auto' }}>
           <Text className="text-lg font-quicksand-semibold">{food.price}$</Text>
-          <TouchableOpacity className="size-10 border rounded-full bg-white" style={{ padding: 8, borderColor: '#00000047' }}>
+          <TouchableOpacity className="mr-2 size-10 border rounded-full bg-white" style={{ padding: 8, borderColor: '#00000047' }}>
             <Image source={images.plus} style={{ width: 15, height: 15 }} />
           </TouchableOpacity>
         </View>
