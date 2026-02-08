@@ -45,6 +45,7 @@ const CartItemsList: React.FC<CartItemsListProps> = ({
 
   return (
     <FlatList
+      contentContainerClassName="pb-28"
       data={items}
       renderItem={({ item }) => (
         <CartItem
