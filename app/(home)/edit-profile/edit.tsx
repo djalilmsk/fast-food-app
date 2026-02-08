@@ -2,6 +2,7 @@ import { View, Text, ScrollView, Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAuth } from '@/context/auth'
+import { useAddress } from '@/context/address'
 import GoBackArrow from '@/components/ui/GoBackArrow'
 import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js'
 import { Controller, useForm } from 'react-hook-form'
@@ -14,6 +15,7 @@ import { router } from 'expo-router'
 
 const EditProfile = () => {
   const { user } = useAuth()
+  const { updateAddress } = useAddress()
   const { handleSubmit, formState: { errors }, control } = useForm<z.infer<typeof EditProfileSchema>>({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
@@ -30,6 +32,13 @@ const EditProfile = () => {
   const onSubmit = (data: z.infer<typeof EditProfileSchema>) => {
     update(data, {
       onSuccess: () => {
+        // Update address context when addresses are updated
+        if (data.address1) {
+          updateAddress('address1', data.address1)
+        }
+        if (data.address2) {
+          updateAddress('address2', data.address2)
+        }
         router.back()
       },
       onError: () => {
