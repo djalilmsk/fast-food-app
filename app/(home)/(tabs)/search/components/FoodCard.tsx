@@ -23,9 +23,9 @@ function FoodCard({ food, onPress }: { food: any; onPress?: (food: any) => void 
         <Text className="font-quicksand-medium text-sm" numberOfLines={2}>{food.category} | {food.description}</Text>
         <View className="flex-row justify-between items-center" style={{ marginTop: 'auto' }}>
           <Text className="text-lg font-quicksand-semibold">{food.price.toFixed(2)}$</Text>
-          <TouchableOpacity className="mr-2 size-10 border rounded-full bg-white" style={{ padding: 8, borderColor: '#00000047' }}>
+          <View className="mr-2 size-10 border rounded-full bg-white" style={{ padding: 8, borderColor: '#00000047' }}>
             <Image source={images.plus} style={{ width: 15, height: 15 }} />
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Pressable>

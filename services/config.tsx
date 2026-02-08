@@ -20,7 +20,7 @@ export const queryClient = new QueryClient({
 //  Axios Instance
 // ======================
 
-const url = 'http://192.168.1.7:3000/api/v1/';
+const url = 'https://fast-food-4xqh.onrender.com/api/v1/';
 
 export const customFetch = axios.create({
   baseURL: url,
