@@ -16,6 +16,7 @@ type Props = {
   containerClassName?: string;
   inputClassName?: string;
   disabled?: boolean;
+  variant?: "default" | "primary"
 };
 
 export default function CustomInput({
@@ -32,6 +33,7 @@ export default function CustomInput({
   containerClassName = "",
   inputClassName = "",
   disabled = false,
+  variant = 'default'
 }: Props) {
   return (
     <View className={`w-full ${containerClassName}`}>
@@ -41,10 +43,13 @@ export default function CustomInput({
 
       <View
         className={cn(
-          "flex-row items-center border-b",
+          "flex-row items-center",
+          variant === "default" && "border-b",
+          variant === "primary" && "border-transparent rounded-full bg-white shadow-slate-500 shadow-lg",
           inputClassName ? "" : "py-2",
           error ? "border-error" : "border-gray-300"
         )}
+        style={{ paddingHorizontal: variant === "primary" ? 12 : 0 }}
       >
         {leftIcon ? (
           <Image source={leftIcon} className="w-5 h-5 mr-2" resizeMode="contain" />

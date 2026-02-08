@@ -92,6 +92,7 @@ const EditProfile = () => {
                 <CustomInput
                   label='Phone Number'
                   placeholder='Enter Your Phone Number'
+                  keyboardType='numbers'
                   value={value}
                   onChangeText={onChange}
                   error={errors.phoneNumber?.message}
