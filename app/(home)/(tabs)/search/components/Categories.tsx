@@ -1,22 +1,45 @@
 import { CATEGORIES } from "@/constants"
-import { useState } from "react";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native"
 
 function Categories() {
-  const [active, setActive] = useState('1');
+  const params = useLocalSearchParams()
+  const [active, setActive] = useState(params.category as string || '1');
+  const scrollViewRef = useRef<ScrollView>(null)
+  const categoryRefs = useRef<{ [key: string]: View }>({})
+
+  useEffect(() => {
+    if (params.category) {
+      setActive(params.category as string)
+    }
+  }, [params.category])
+
+  useEffect(() => {
+    if (active && categoryRefs.current[active]) {
+      categoryRefs.current[active].measureInWindow((x, y, width, height) => {
+        scrollViewRef.current?.scrollTo({ x: x - 20, animated: true })
+      })
+    }
+  }, [active])
 
   return (
-    <View style={{ paddingTop: 16 }}>
+    <View className="pt-4" style={{ paddingTop: 20 }}>
       <ScrollView
+        ref={scrollViewRef}
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           gap: 12,
+          paddingHorizontal: 16,
         }}
       >
         {CATEGORIES.map(item => (
           <Pressable
             key={item.id}
+            ref={(ref) => {
+              if (ref) categoryRefs.current[item.id] = ref as any
+            }}
             onPress={() => setActive(item.id)}
             style={{
               paddingHorizontal: 20,
