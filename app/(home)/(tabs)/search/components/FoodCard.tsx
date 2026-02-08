@@ -1,5 +1,6 @@
 import { images } from "@/constants"
-import { Image, Pressable, Text, TouchableOpacity, View } from "react-native"
+import { Image } from 'expo-image';
+import { Pressable, Text, TouchableOpacity, View } from "react-native"
 import { useState } from "react"
 
 function FoodCard({ food, onPress }: { food: any; onPress?: (food: any) => void }) {

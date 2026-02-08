@@ -4,9 +4,8 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import CartButton from './CartButton'
 import { useAuth } from '@/context/auth'
 import { useAddress } from '@/context/address'
-import useGetCart from '@/services/cart/useGetCart'
+
 const HomeHeader = () => {
-  const { user } = useAuth()
   const { currentAddress, selectedAddress, setSelectedAddress, address1, address2 } = useAddress()
 
   const handleAddressSwitch = () => {

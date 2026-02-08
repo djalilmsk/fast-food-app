@@ -9,12 +9,18 @@ import { images } from "@/constants";
 import { useFoodDetailsSheet } from "@/context/food/FoodDetailsSheetContext";
 
 export default function Search() {
-  const { data: foods, isLoading } = useGetFood()
+  const { data: foods, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetFood()
   const { foodDetailsSheetRef } = useFoodDetailsSheet()
   const isEmpty = !foods || foods.length === 0
 
   const handleFoodPress = (food: any) => {
     foodDetailsSheetRef?.current?.open(food)
+  }
+
+  const handleEndReached = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
   }
 
   return (
@@ -47,6 +53,15 @@ export default function Search() {
             <View style={{ paddingVertical: 40, alignItems: 'center' }}>
               <Text style={{ fontSize: 16, color: '#999' }}>No foods found</Text>
             </View>
+          }
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={
+            isFetchingNextPage ? (
+              <View style={{ paddingVertical: 20, alignItems: 'center' }}>
+                <ActivityIndicator size="small" color="#FF8C00" />
+              </View>
+            ) : null
           }
         />
       )}

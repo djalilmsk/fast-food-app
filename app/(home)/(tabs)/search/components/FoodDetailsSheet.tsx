@@ -1,4 +1,5 @@
-import { Image, Text, View, Pressable } from 'react-native'
+import { Text, View, Pressable, Image as RNImage } from 'react-native'
+import { Image } from 'expo-image'
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from '@gorhom/bottom-sheet'
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import CustomButton from '@/components/ui/CustomButton'
@@ -62,10 +63,11 @@ const FoodDetailsSheet = forwardRef<FoodDetailsSheetRef>((_, ref) => {
             {/* Food Image */}
             <Image
               source={{ uri: food.image }}
-              className='w-full h-48 rounded-lg mb-6 bg-gray-200'
+              style={{ width: '100%', height: 240, backgroundColor: '#00000024', borderRadius: 10, marginBottom: 24 }}
+              contentFit="cover"
             />
 
-            {/* Food Info */}
+
             <View className='mb-6'>
               <View className='flex-row items-start justify-between mb-2'>
                 <Text className='font-quicksand-bold text-2xl flex-1'>{food.name}</Text>
@@ -83,14 +85,14 @@ const FoodDetailsSheet = forwardRef<FoodDetailsSheetRef>((_, ref) => {
                   className='p-2 rounded-md bg-white border border-gray-300'
                   onPress={() => setQuantity(Math.max(1, quantity - 1))}
                 >
-                  <Image source={images.minus} className='w-5 h-2' />
+                  <RNImage source={images.minus} className='w-5 h-2' />
                 </Pressable>
                 <Text className='font-quicksand-bold text-lg w-12 text-center'>{quantity}</Text>
                 <Pressable
                   className='p-2 rounded-md bg-white border border-gray-300'
                   onPress={() => setQuantity(quantity + 1)}
                 >
-                  <Image source={images.plus} className='size-5' />
+                  <RNImage source={images.plus} className='size-5' />
                 </Pressable>
                 <Text className='font-quicksand-semibold text-gray-600 ml-auto'>
                   Total: ${(food.price * quantity).toFixed(2)}
